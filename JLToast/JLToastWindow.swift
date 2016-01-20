@@ -21,15 +21,20 @@ import UIKit
 
 public class JLToastWindow: UIWindow {
 
-    public static let sharedWindow: JLToastWindow = {
-        let window = JLToastWindow(frame: UIScreen.mainScreen().bounds)
-        window.userInteractionEnabled = false
-        window.windowLevel = CGFloat.max
-        window.backgroundColor = .clearColor()
-        window.rootViewController = JLToastWindowRootViewController()
-        window.hidden = false
-        return window
-    }()
+    public static let sharedWindow: UIWindow = {
+		let window: UIWindow
+		if let w = UIApplication.sharedApplication().keyWindow {
+			window = w
+		} else {
+			window = JLToastWindow(frame: UIScreen.mainScreen().bounds)
+			window.windowLevel = CGFloat.max
+			window.rootViewController = JLToastWindowRootViewController()
+			window.userInteractionEnabled = false
+			window.backgroundColor = .clearColor()
+			window.hidden = false
+		}
+		return window
+	}()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
